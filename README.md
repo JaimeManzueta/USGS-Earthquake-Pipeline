@@ -1,1 +1,0 @@
-# USGS-Earthquake-Mini-Pipeline

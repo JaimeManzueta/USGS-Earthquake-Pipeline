@@ -4,6 +4,8 @@ import datetime
 import pendulum
 
 from airflow.sdk import task, dag
+from airflow.providers.postgres.hooks.postgres import PostgresHook
+from airflow.providers.common.sql.operators.sql import SQLExecuteQueryOperator
 
 
 @dag("Earthquake_dag",
@@ -16,8 +18,7 @@ from airflow.sdk import task, dag
 
 
 @task
+def getting_data():
 
 
-
-
-
+    pass
