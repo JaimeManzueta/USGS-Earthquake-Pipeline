@@ -40,6 +40,4 @@ def processing_quakes():
 
 @task
 def getting_data():
-
-
     pass
