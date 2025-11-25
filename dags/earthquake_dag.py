@@ -16,7 +16,22 @@ from airflow.providers.common.sql.operators.sql import SQLExecuteQueryOperator
 
 )
 
-def processing_quakes():
+
+@task
+def extract_data():
+    pass
+
+
+
+
+@task
+def transform_data():
+    pass
+    
+
+
+
+def sql_processing_quakes():
     create_quakes_table = SQLExecuteQueryOperator(
         task_id = "create_quake_table",
         conn_id = "quake_pg_conn",
@@ -35,9 +50,8 @@ def processing_quakes():
     )
 
 
-@task
-
-
-@task
-def getting_data():
+def load_data():
     pass
+
+
+
