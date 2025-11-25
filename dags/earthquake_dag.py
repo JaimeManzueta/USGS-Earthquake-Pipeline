@@ -16,6 +16,27 @@ from airflow.providers.common.sql.operators.sql import SQLExecuteQueryOperator
 
 )
 
+def processing_quakes():
+    create_quakes_table = SQLExecuteQueryOperator(
+        task_id = "create_quake_table",
+        conn_id = "quake_pg_conn",
+        sql = """
+          CREATE TABLE IF NOT EXIST quakes(
+          "id" NUMERIC PRIMARY KEY,
+          "place" VARCHAR(255),
+          "magnitude" INT,
+          "felt" INT,
+          "status" VARCHAR(255),
+          "rms" INT,
+          "dmin" INT,
+          "nst" INT,
+          "cdi" INT
+          ); """,    
+    )
+
+
+@task
+
 
 @task
 def getting_data():
