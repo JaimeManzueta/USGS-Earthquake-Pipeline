@@ -24,7 +24,6 @@ def extract_data():
     API = "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2025-11-01&endtime=2025-11-14&minmagnitude=4.5&orderby=time"
     response = requests.get(API)
     extracted = response.json()
-
     return extracted
     
 
@@ -32,62 +31,65 @@ def extract_data():
 # My Second Task that will Transform the raw Data into clean Data------------------
 @task
 # FIX: data_stored - it doasnt work with the function - cant implement it 
-def transform_data():
+def transform_data(data):
+    # If the metadata status is there (200) then give me the data
     if data.get("metadata", {}).get("status") == 200:
-        # turning the data into a list
+        # initialize in A list first 
         data_stored = []
-
-        # Creating a Loop for the data:
+        # accessing the data's dictionary on the api web - {only access to the first data} - Used some AI for help on this 
         for feature in data.get("features", []):
-            properties = feature.get("properties", {})
+            properties = feature.get("properties", {})        
+
+        # gathering only the important and relevent data from the dictionary
+            magnitude = properties.get("mag")
+            place = properties.get("place")
+            nst = properties.get("nst")
+            felt = properties.get("felt")
 
 
-            
-            magnitude = properties.get["mag"]
-            place = properties.get["place"]
-            nst = properties.get["nst"]
-            felt = properties.get["felt"]
-
-
-            # store it into the data_stored
-            data_that_stored = {
+        # store it into the data_stored
+            current_record = {
                 "magnitude: ": magnitude,
                 "Place: ": place,
                 "nst: ": nst,
                 "felt: ": felt
             }
-            data_stored.append(data_that_stored)
+            
+            data_stored.append(current_record)
 
 
         return data_stored
 
-
 # Processing the Sql in order to automate it into the DB---------------------
 
-def sql_processing_quakes():
-    create_quakes_table = SQLExecuteQueryOperator(
-        task_id = "create_quake_table",
-        conn_id = "quake_pg_conn",
-        sql = """
-          CREATE TABLE IF NOT EXIST quakes(
-          "id" NUMERIC PRIMARY KEY,
-          "place" VARCHAR(255),
-          "magnitude" INT,
-          "felt" INT,
-          "status" VARCHAR(255),
-          "rms" INT,
-          "dmin" INT,
-          "nst" INT,
-          "cdi" INT
-          ); """,    
-    )
 
-# Loading the Clean Data into DB-------------------------------------------
+
+# Loading the Clean Data into Postgres DB-------------------------------------------
+@task
 def load_data():
-    pass
+    create_quakes_table = SQLExecuteQueryOperator(
+    task_id = "create_quake_table",
+    conn_id = "quake_pg_conn",
+    sql = """
+        CREATE TABLE IF NOT EXIST quakes(
+        "id" NUMERIC PRIMARY KEY,
+        "place" VARCHAR(255),
+        "magnitude" INT,
+        "felt" INT,
+        "status" VARCHAR(255),
+        "rms" INT,
+        "dmin" INT,
+        "nst" INT,
+        "cdi" INT
+        ); """,    
+    )
     
 
 
 
 
 # Combining everything together------------------------------------------
+extract = extract_data()
+transformed = transform_data(extract)
+load_data(transformed)
+
