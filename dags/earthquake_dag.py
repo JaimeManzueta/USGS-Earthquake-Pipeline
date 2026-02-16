@@ -45,14 +45,16 @@ def transform_data(data):
             place = properties.get("place")
             nst = properties.get("nst")
             felt = properties.get("felt")
-
+            significance = properties.get("sig") 
 
         # store it into the data_stored
             current_record = {
                 "magnitude: ": magnitude,
                 "Place: ": place,
                 "nst: ": nst,
-                "felt: ": felt
+                "felt: ": felt,
+                "Significance: ": significance
+
             }
             
             data_stored.append(current_record)
@@ -60,13 +62,17 @@ def transform_data(data):
 
         return data_stored
 
+
+
+
 # Processing the Sql in order to automate it into the DB---------------------
-
-
-
 # Loading the Clean Data into Postgres DB-------------------------------------------
 @task
-def load_data():
+def load_data(transformed_data):
+    earthq_database_hook = PostgresHook()
+    earthq_database_conn = earthq_database_hook.get
+
+
     create_quakes_table = SQLExecuteQueryOperator(
     task_id = "create_quake_table",
     conn_id = "quake_pg_conn",
@@ -84,7 +90,6 @@ def load_data():
         ); """,    
     )
     
-
 
 
 
