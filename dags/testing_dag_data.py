@@ -14,7 +14,6 @@ def get_data(url):
 
     return get_data
 
-
 # Transforming Raw Data Into Clean Data----------------------------------------
 def transform_data(data):
     # If the metadata status is there (200) then give me the data
