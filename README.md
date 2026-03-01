@@ -44,7 +44,11 @@ On each run, the pipeline:
 
 ---
 ## Results
+<img width="526" height="233" alt="image" src="https://github.com/user-attachments/assets/db4d7edf-5382-4d4b-bc3e-154486327edb" />
+
+
 <img width="1127" height="925" alt="image" src="https://github.com/user-attachments/assets/bc97eadf-d24b-4b39-9292-60af4f3a8ceb" />
+
 
 
 ---
@@ -52,4 +56,5 @@ On each run, the pipeline:
 ## Data Source
 
 - **Provider:** United States Geological Survey (USGS) 
+
 
