@@ -71,7 +71,7 @@ def load_data(transformed_data):
     earthq_database_hook = PostgresHook()
     earthq_database_conn = earthq_database_hook.get
 
-    # Connecting To Postgres Database 
+
     create_quakes_table = SQLExecuteQueryOperator(
     task_id = "create_quake_table",
     conn_id = "quake_pg_conn",
