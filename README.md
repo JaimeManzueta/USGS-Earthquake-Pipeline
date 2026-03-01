@@ -43,7 +43,13 @@ On each run, the pipeline:
 - **Pendulum / datetime** – Date and time handling for scheduling and API parameters  
 
 ---
+## Results
+<img width="1127" height="925" alt="image" src="https://github.com/user-attachments/assets/bc97eadf-d24b-4b39-9292-60af4f3a8ceb" />
+
+
+---
 
 ## Data Source
 
 - **Provider:** United States Geological Survey (USGS) 
+
